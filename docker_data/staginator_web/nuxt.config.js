@@ -1,8 +1,11 @@
 const pkg = require('./package');
+const path = require('path');
+require('dotenv').load();
+require('dotenv').load({
+    'path': path.resolve(process.cwd(), '.env.default')
+});
 
 module.exports = {
-    mode: 'universal',
-
     /*
     ** Headers of the page
     */
@@ -20,44 +23,27 @@ module.exports = {
 
     loading: { color: '#20a0ff' },
 
+    plugins: [
+        'plugins/element-ui.js'
+    ],
+
     /*
     ** Global CSS
     */
     css: [
-        'animate.css/animate.css',
-        '~assets/transitions.css'
-    ],
-
-    plugins: [
+        'element-ui/lib/theme-chalk/index.css'
     ],
 
     /*
     ** Nuxt.js modules
     */
-    modules: [,
-        // Doc: https://bootstrap-vue.js.org/docs/
-        'bootstrap-vue/nuxt'
+    modules: [
     ],
 
     /*
     ** Build configuration
     */
     build: {
-
-
-        /*
-        ** Babel
-         */
-        babel: {
-            'presets': ['vue-app'],
-            'plugins': [
-                ['component', [{
-                    'libraryName': 'element-ui',
-                    'styleLibraryName': 'theme-default'
-                }]]
-            ],
-            'comments': false
-        },
         /*
         ** You can extend webpack config here
         */

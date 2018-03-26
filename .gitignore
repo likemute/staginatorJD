@@ -22,3 +22,7 @@ node_modules
 .idea/
 
 .env
+
+dist
+
+docker-compose.override.yml

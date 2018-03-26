@@ -2,36 +2,45 @@ version: '3'
 services:
 
   staginator_api:
+    image: staginator_api_image
     build: docker_data/staginator_api/
-    container_name: staginatorJD_staginator
-    ports:
-      - ${APPLICATION_PORT}:80
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
+    container_name: staginatorJD_api
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "./staginator_api:/home/node/app"
-    command: "npm start"
     depends_on:
       - redis
-    env_file: .env
+    env_file:
+      - docker_data/staginator_api/.env
+      - docker_data/staginator_api/.env.default
+    entrypoint:
+      - APPLICATION_PORT=1337
+      - NODE_ENV=production
+      - APP_URL=http://api.stage
+      - BASE_STAGE_HOST=stagings.stage
+      - NGINX_CONFIG_FILES_PATH=/etc/nginx/sites_enabled/
+      - GITLAB_HOST=http://gitlab.stage
+      - GITLAB_APP_ID=71327257d2f2e35ffec19242c63818819b98e7a30c63c907847c40e96208703e
+      - GITLAB_SECRET=
+    ports:
+      - '20050:1337'
     restart: always
 
   redis:
     image: redis:3.2-alpine
     container_name: staginatorJD_redis
     volumes:
-      - "./redis/data:/data"
-      - "./redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./docker_data/redis/data:/data"
+      - "./docker_data/redis/redis.conf:/usr/local/etc/redis/redis.conf"
 
   staginator_web:
-    working_dir: /home/node/app
-    env_file: .env
-    volumes:
-      - "./staginator_web:/home/node/app"
-    command: "NODE_ENV=production node_modules/.bin/webpack --progress --config webpack.config.js"
-
-networks:
-  staginatorJD_redis:
+    image: staginator_web_image
+    build: docker_data/staginator_web/
+    container_name: staginatorJD_web
+    env_file:
+      - docker_data/staginator_web/.env
+      - docker_data/staginator_web/.env.default
+    entrypoint:
+      - NODE_ENV=production
+      - API_URL=http://api.stage
+    ports:
+     - "20051:80"

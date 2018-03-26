@@ -1,0 +1,28 @@
+{
+  "name": "staginatorJD",
+  "version": "0.0.1",
+  "author": "Alexey Andreev <trashtalk.mute@gmail.com>",
+  "dependencies": {
+    "async": "2.0.1",
+    "connect-redis": "3.2.0",
+    "dotenv": "^5.0.1",
+    "lodash": "3.10.1",
+    "passport": "^0.4.0",
+    "passport-gitlab2": "^3.0.0",
+    "passport-oauth2-refresh": "^1.0.0",
+    "sails": "^1.0.0-41",
+    "sails-hook-orm": "^2.0.0-16",
+    "sails-hook-sockets": "^1.4.0",
+    "sails-redis": "^0.10.7",
+    "socket.io-redis": "4.0.0",
+    "uuid": "^3.2.1"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "run": "node app.js"
+  },
+  "main": "app.js",
+  "engines": {
+    "node": "9"
+  }
+}
