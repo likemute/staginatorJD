@@ -7,6 +7,7 @@
     "connect-redis": "3.2.0",
     "dotenv": "^5.0.1",
     "lodash": "3.10.1",
+    "node-gitlab-api": "^2.2.6",
     "passport": "^0.4.0",
     "passport-gitlab2": "^3.0.0",
     "passport-oauth2-refresh": "^1.0.0",

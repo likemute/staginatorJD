@@ -22,5 +22,17 @@ module.exports.policies = {
     'user' : {
         'login' : true,
         'gitlabCallback' : true
+    },
+
+    'project': {
+        'create' : ['IsAuthenticated','IsGitlabAdmin'],
+        'list' : ['IsAuthenticated'],
+        'delete': ['IsAuthenticated','IsGitlabAdmin'],
+        'update': ['IsAuthenticated','IsGitlabAdmin'],
+        'get': ['IsAuthenticated']
+    },
+
+    'gitlab' : {
+        'projects': ['IsAuthenticated','IsGitlabAdmin']
     }
 };

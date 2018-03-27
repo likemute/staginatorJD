@@ -5,9 +5,6 @@ module.exports = {
         name: {
             type: 'string'
         },
-        tokens    : {
-            type: 'json'
-        },
         data      : {
             type: 'json'
         }
