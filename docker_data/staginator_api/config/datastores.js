@@ -5,6 +5,7 @@
 
 module.exports.datastores = {
     default: {
-        url: 'redis://localhost:6379/0'
+        adapter: 'sails-mongo',
+        url: 'mongodb://localhost:27017/staginator'
     }
 };

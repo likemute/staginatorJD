@@ -1,15 +1,9 @@
-import Gitlab from 'node-gitlab-api';
-
 module.exports = {
-    projects: function (req, res) {
-        const apiClient = new Gitlab({
-            url:   sails.config.gitlab.host,
-            oauthToken: req.session.user.accessToken
-        });
+    projects: async function (req, res) {
+        let gitLabProjects = await req._sails.gitlab.projects(req.user.accessToken);
 
-        //let apiClient = await req._sails.getGitlabApiClient(req.session.user.accessToken);
-        apiClient.projects.all().then(function (projects) {
-            return res.json({"result": true, "projects": projects});
-        });
+        let projects = await gitLabProjects.Projects.all();
+
+        return res.json({"result": true, "projects": projects});
     }
 };

@@ -44,15 +44,11 @@ module.exports.models = {
      * > https://sailsjs.com/docs/concepts/orm/model-settings#?attributes       *
      *                                                                          *
      ***************************************************************************/
-    primaryKey: 'identifier',
+    primaryKey: 'id',
     attributes: {
         createdAt: { type: 'ref', columnType: 'datetime', autoCreatedAt: true, },
         updatedAt: { type: 'ref', columnType: 'datetime', autoUpdatedAt: true, },
-        identifier: {
-            type: 'STRING',
-            unique: true,
-            required: true
-        }
+        id: { type: 'string', columnName: '_id'},
     },
 
     /******************************************************************************

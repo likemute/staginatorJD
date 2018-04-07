@@ -19,12 +19,12 @@ module.exports.policies = {
 
     '*': 'IsAuthenticated',
 
-    'user' : {
+    UserController : {
         'login' : true,
         'gitlabCallback' : true
     },
 
-    'project': {
+    ProjectController: {
         'create' : ['IsAuthenticated','IsGitlabAdmin'],
         'list' : ['IsAuthenticated'],
         'delete': ['IsAuthenticated','IsGitlabAdmin'],
@@ -32,7 +32,7 @@ module.exports.policies = {
         'get': ['IsAuthenticated']
     },
 
-    'gitlab' : {
+    GitlabController : {
         'projects': ['IsAuthenticated','IsGitlabAdmin']
     }
 };

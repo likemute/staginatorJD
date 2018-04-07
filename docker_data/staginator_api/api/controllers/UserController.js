@@ -5,7 +5,8 @@ module.exports = {
             state: new Buffer(JSON.stringify({
                 'successRedirect': req.param('successRedirect', null),
                 'failRedirect': req.param('successRedirect', null)
-            })).toString('base64')
+            })).toString('base64'),
+            scope: ['api']
         };
         req._sails.passport.authenticate('gitlab', options)(req, res, req.next);
     },
@@ -15,7 +16,7 @@ module.exports = {
         return res.json({"result": true})
     },
 
-    account: function (req, res) {
+    index: function (req, res) {
         return res.json({"result": true, "user": req.user});
     },
 

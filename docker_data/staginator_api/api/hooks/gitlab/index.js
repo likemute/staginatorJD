@@ -1,6 +1,6 @@
-/**
- * Passport  hook
- */
+let GitlabProjects = require('gitlab').ProjectsBundler;
+let GitlabGroups = require('gitlab').GroupsBundler;
+let GitlabUsers = require('gitlab').UsersBundler;
 
 module.exports = function (sails){
 
@@ -28,12 +28,25 @@ module.exports = function (sails){
                 return cb(err);
             }
             sails.after('hook:orm:loaded', function (){
-
-                sails.getGitlabApiClient = async function(token) {
-                    return await require('node-gitlab-api')({
-                        url:   sails.config.gitlab.host,
-                        oauthToken: token
-                    })
+                sails.gitlab = {
+                    projects: async function (token) {
+                        return await new GitlabProjects({
+                            url: sails.config.gitlab.host,
+                            oauthToken: token
+                        })
+                    },
+                    groups: async function (token) {
+                        return await new GitlabGroups({
+                            url: sails.config.gitlab.host,
+                            oauthToken: token
+                        })
+                    },
+                    users: async function (token) {
+                        return await new GitlabUsers({
+                            url: sails.config.gitlab.host,
+                            oauthToken: token
+                        })
+                    }
                 };
 
                 // It's very important to trigger this callback method when you are finished

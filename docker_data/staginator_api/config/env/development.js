@@ -9,7 +9,7 @@ module.exports = {
 
     datastores: {
         default: {
-            url: 'redis://172.18.0.2:6379/0'
+            url: 'mongodb://localhost:27017/staginator'
         }
     },
     session: {

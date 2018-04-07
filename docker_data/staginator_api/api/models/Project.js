@@ -5,12 +5,30 @@ module.exports = {
         name: {
             type: 'string'
         },
-        data      : {
-            type: 'json'
+        gitlabId: {
+            type: 'number'
+        },
+        hookId: {
+            type: 'number'
+        },
+        hookSecret: {
+            type: 'string'
+        },
+        repositoryPath: {
+            type: 'string'
+        },
+        preRunScript: {
+            type: 'string'
+        },
+        useDockerCompose: {
+            type: 'boolean'
+        },
+        postRunScript: {
+            type: 'string'
         }
     },
 
     customToJSON: function() {
-        return _.omit(this, []);
+        return _.omit(this, ['hookSecret']);
     }
 };

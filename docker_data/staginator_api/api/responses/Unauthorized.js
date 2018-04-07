@@ -1,3 +1,3 @@
-module.exports = function unauthorized (opts) {
-    return this.res.json({"result": false, "auth": false});
+module.exports = function () {
+    return this.res.json(401, {"result": false, "auth": false});
 };
