@@ -1,3 +1,3 @@
 module.exports = function() {
-    return this.res.json(400, {"result": false, "error": "Wrong payload"});
+    return this.res.status(400).json({"result": false, "error": "Wrong payload"});
 };

@@ -14,7 +14,7 @@ module.exports = {
         hookSecret: {
             type: 'string'
         },
-        repositoryPath: {
+        registryPath: {
             type: 'string'
         },
         preRunScript: {

@@ -1,3 +1,3 @@
 module.exports = function () {
-    return this.res.json(401, {"result": false, "auth": false});
+    return this.res.status(401).json({"result": false, "auth": false});
 };

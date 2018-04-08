@@ -1,3 +1,3 @@
 module.exports = function() {
-    return this.res.json(404, {"result": false, "error": "Entity not found"});
+    return this.res.status(404).json({"result": false, "error": "Entity not found"});
 };

@@ -1,3 +1,3 @@
 module.exports = function() {
-    return this.res.json(422, {"result": false, "error": "Entity already exist"});
+    return this.res.status(422).json({"result": false, "error": "Entity already exist"});
 };

@@ -1,5 +1,6 @@
 const url = require("url");
 const uuid = require("uuid");
+const lodash = require("lodash");
 
 module.exports = {
     create: async function (req, res) {
@@ -69,10 +70,38 @@ module.exports = {
         } else {
             return res.NotFound();
         }
-
     },
 
     run: async function (req, res) {
+        let kind = req.param('object_kind', null);
+        let projectToken = req.headers["X-Gitlab-Token"];
+        if (!projectToken) {
+            return res.WrongPayload();
+        }
+        let project = await req._sails.models.project.findOne({'hookSecret' : projectToken});
+        if (!project) {
+            return res.EntityNotFound();
+        }
 
+        switch (kind) {
+            case "push":
+                let ref = req.param('ref', '');
+                if (req.param('after', '') === '0000000000000000000000000000000000000000') {
+                    let images = await req._sails.docker.listImages();
+                    let containers = await req._sails.docker.listContainers();
+
+                    await req._sails.staginator.removeContainers(project, ref);
+                    await req._sails.staginator.removeImages(project, ref);
+                    // remove stagings
+                } else {
+                    await req._sails.staginator.removeContainers(project, ref);
+                    await req._sails.staginator.removeImages(project, ref);
+                    // remove stagings
+                    // create staging
+                }
+                break;
+            case "build":
+                break;
+        }
     }
 };

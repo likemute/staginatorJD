@@ -4,5 +4,5 @@ module.exports = function(data) {
     if (data) {
         result.data = data;
     }
-    return this.res.json(200, result);
+    return this.res.status(200).json(result);
 };

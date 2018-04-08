@@ -31,4 +31,5 @@ module.exports.routes = {
     'get /gitlab/projects': 'GitlabController.projects',
 
     'get /docker/images': 'DockerController.images',
+    'get /docker/containers': 'DockerController.containers',
 };
