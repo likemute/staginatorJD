@@ -25,6 +25,15 @@ module.exports = {
         },
         postRunScript: {
             type: 'string'
+        },
+        useAwsDeploy: {
+            type: 'boolean'
+        },
+        awsImage: {
+            type: 'string'
+        },
+        awsType: {
+            type: 'string'
         }
     },
 
