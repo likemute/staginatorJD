@@ -1,5 +1,6 @@
 const lodash = require("lodash");
 const exec = require("child_process").exec;
+const fs = require('fs-extra');
 
 module.exports = function (sails){
     return {
@@ -14,6 +15,9 @@ module.exports = function (sails){
                 await sails.staginator.removeContainers(stage.project, stage.ref);
                 await sails.staginator.removeImages(stage.project, stage.ref);
             }
+            if (stage.path) {
+                fs.removeSync(stage.path);
+            }
             await sails.models.stage.destroy(stage.id);
             return true;
         },
@@ -21,17 +25,18 @@ module.exports = function (sails){
             await sails.staginator.removeContainers(project, ref);
             await sails.staginator.removeImages(project, ref);
             let path = sails.config.stagings.path + "/" + project.name + "_" + sails.stringHelper.prepare(ref);
-            //TODO
+            if (!path.existsSync(dir)) {
+                fs.mkdirsSync(dir, 744);
+            }
+            let instanceId = 0;
             if (project.useDockerCompose) {
                 let name = project.name+"_"+sails.stringHelper.prepare(ref);
-                const { stdout, stderr } = await exec("docker-compose -p '"+name+"' up -d", {cwd: stage.path, timeout: 5});
+                await exec("docker-compose -p '"+name+"' down --rmi 'all'", {cwd: path, timeout: 5});
+                const { stdout, stderr } = await exec("docker-compose -p '"+name+"' up -d", {cwd: path, timeout: 5});
             } else {
                 await sails.staginator.removeContainers(stage.project, stage.ref);
                 await sails.staginator.removeImages(stage.project, stage.ref);
             }
-
-            let instanceId;
-
             let stage = await sails.models.stage.create({project:project, ref: ref, instanceId: instanceId}).fetch();
             return stage;
         },
