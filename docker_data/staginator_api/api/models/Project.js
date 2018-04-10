@@ -26,14 +26,16 @@ module.exports = {
         postRunScript: {
             type: 'string'
         },
-        useAwsDeploy: {
+        deployType: {
             type: 'boolean'
         },
-        awsImage: {
-            type: 'string'
+        aws: {
+            collection:'Aws',
+            via: 'project'
         },
-        awsType: {
-            type: 'string'
+        stagings: {
+            collection:'Stage',
+            via: 'project'
         }
     },
 

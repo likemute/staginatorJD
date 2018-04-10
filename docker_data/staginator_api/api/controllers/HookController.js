@@ -87,20 +87,27 @@ module.exports = {
             case "push":
                 let ref = req.param('ref', '');
                 if (req.param('after', '') === '0000000000000000000000000000000000000000') {
-                    let images = await req._sails.docker.listImages();
-                    let containers = await req._sails.docker.listContainers();
-
-                    await req._sails.staginator.removeContainers(project, ref);
-                    await req._sails.staginator.removeImages(project, ref);
-                    // remove stagings
-                } else {
-                    await req._sails.staginator.removeContainers(project, ref);
-                    await req._sails.staginator.removeImages(project, ref);
-                    // remove stagings
-                    // create staging
+                    switch (project.deployType) {
+                        case "aws":
+                            await req._sails.aws.removeStaging(project, ref);
+                            break;
+                        case "local":
+                            await req._sails.staginator.removeStaging(project, ref);
+                            break;
+                    }
                 }
                 break;
             case "build":
+                switch (project.deployType) {
+                    case "aws":
+                        await req._sails.aws.removeStaging(project, ref);
+                        await req._sails.aws.createStaging(project, ref);
+                        break;
+                    case "local":
+                        await req._sails.staginator.removeStaging(project, ref);
+                        await req._sails.staginator.createStaging(project, ref);
+                        break;
+                }
                 break;
         }
     }

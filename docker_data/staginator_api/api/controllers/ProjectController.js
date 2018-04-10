@@ -30,7 +30,7 @@ module.exports = {
         let hookSecret = uuid.v4();
 
         let createdProject = await req._sails.models.project.create({
-            name: gitlabProject.name,
+            name: req._sails.stringHelper.prepare(gitlabProject.name),
             gitlabId: gitlabProject.id,
             repositoryPath: repositoryPath,
             preRunScript: preRunScript,
